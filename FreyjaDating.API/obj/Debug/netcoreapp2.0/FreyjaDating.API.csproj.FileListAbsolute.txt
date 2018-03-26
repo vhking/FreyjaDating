@@ -1,0 +1,10 @@
+C:\Users\helt0\Documents\Visual Studio 2017\Projects\FreyjaDating\FreyjaDating.API\bin\Debug\netcoreapp2.0\FreyjaDating.API.deps.json
+C:\Users\helt0\Documents\Visual Studio 2017\Projects\FreyjaDating\FreyjaDating.API\bin\Debug\netcoreapp2.0\FreyjaDating.API.runtimeconfig.json
+C:\Users\helt0\Documents\Visual Studio 2017\Projects\FreyjaDating\FreyjaDating.API\bin\Debug\netcoreapp2.0\FreyjaDating.API.runtimeconfig.dev.json
+C:\Users\helt0\Documents\Visual Studio 2017\Projects\FreyjaDating\FreyjaDating.API\bin\Debug\netcoreapp2.0\FreyjaDating.API.dll
+C:\Users\helt0\Documents\Visual Studio 2017\Projects\FreyjaDating\FreyjaDating.API\bin\Debug\netcoreapp2.0\FreyjaDating.API.pdb
+C:\Users\helt0\Documents\Visual Studio 2017\Projects\FreyjaDating\FreyjaDating.API\obj\Debug\netcoreapp2.0\FreyjaDating.API.csproj.CoreCompileInputs.cache
+C:\Users\helt0\Documents\Visual Studio 2017\Projects\FreyjaDating\FreyjaDating.API\obj\Debug\netcoreapp2.0\FreyjaDating.API.AssemblyInfoInputs.cache
+C:\Users\helt0\Documents\Visual Studio 2017\Projects\FreyjaDating\FreyjaDating.API\obj\Debug\netcoreapp2.0\FreyjaDating.API.AssemblyInfo.cs
+C:\Users\helt0\Documents\Visual Studio 2017\Projects\FreyjaDating\FreyjaDating.API\obj\Debug\netcoreapp2.0\FreyjaDating.API.dll
+C:\Users\helt0\Documents\Visual Studio 2017\Projects\FreyjaDating\FreyjaDating.API\obj\Debug\netcoreapp2.0\FreyjaDating.API.pdb
