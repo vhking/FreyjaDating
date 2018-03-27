@@ -7,6 +7,7 @@ using FreyjaDating.API.Data;
 using FreyjaDating.API.DTOs;
 using FreyjaDating.API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace FreyjaDating.API.Controllers
@@ -15,28 +16,30 @@ namespace FreyjaDating.API.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthRepository _repo;
-        public AuthController(IAuthRepository repo)
+        private readonly IConfiguration _configuration;
+        public AuthController(IAuthRepository repo, IConfiguration configuration)
         {
+            _configuration = configuration;
             _repo = repo;
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]UserForRegisterDTO userForRegisterDTO)
         {
-           
+
             // Stores the user name as lowercase. 
             userForRegisterDTO.Username = userForRegisterDTO.Username.ToLower();
             // checks if  user exits
             if (await _repo.UserExists(userForRegisterDTO.Username))
             {
-               ModelState.AddModelError("Username", "Username already exist");
+                ModelState.AddModelError("Username", "Username already exist");
             }
-                      
+
             // validate request
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }           
+            }
 
             // sets user name 
             var userToCreate = new User
@@ -53,7 +56,7 @@ namespace FreyjaDating.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserForLoginDTO userForLoginDTO)
         {
-            var userFromRepo = _repo.Login(userForLoginDTO.Username, userForLoginDTO.Password);
+            var userFromRepo = await _repo.Login(userForLoginDTO.Username.ToLower(), userForLoginDTO.Password);
             if (userFromRepo == null)
             {
                 return Unauthorized();
@@ -61,7 +64,7 @@ namespace FreyjaDating.API.Controllers
 
             // generate token
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key =  Encoding.ASCII.GetBytes("Super secret key");
+            var key = Encoding.ASCII.GetBytes(_configuration.GetSection("AppSettings:Token").Value);
             var tokenDescription = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
@@ -70,14 +73,14 @@ namespace FreyjaDating.API.Controllers
                     new Claim(ClaimTypes.Name, userForLoginDTO.Username)
                 }),
                 Expires = DateTime.Now.AddDays(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), 
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
                     SecurityAlgorithms.HmacSha512Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescription);
             var tokenString = tokenHandler.WriteToken(token);
 
-            return Ok(new {tokenString});
+            return Ok(new { tokenString });
         }
 
 
