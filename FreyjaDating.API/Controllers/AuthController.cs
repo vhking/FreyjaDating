@@ -1,8 +1,13 @@
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using FreyjaDating.API.Data;
 using FreyjaDating.API.DTOs;
 using FreyjaDating.API.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FreyjaDating.API.Controllers
 {
@@ -44,6 +49,37 @@ namespace FreyjaDating.API.Controllers
 
             return StatusCode(281);
         }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] UserForLoginDTO userForLoginDTO)
+        {
+            var userFromRepo = _repo.Login(userForLoginDTO.Username, userForLoginDTO.Password);
+            if (userFromRepo == null)
+            {
+                return Unauthorized();
+            }
+
+            // generate token
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key =  Encoding.ASCII.GetBytes("Super secret key");
+            var tokenDescription = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
+                    new Claim(ClaimTypes.Name, userForLoginDTO.Username)
+                }),
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), 
+                    SecurityAlgorithms.HmacSha512Signature)
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescription);
+            var tokenString = tokenHandler.WriteToken(token);
+
+            return Ok(new {tokenString});
+        }
+
 
     }
 }
