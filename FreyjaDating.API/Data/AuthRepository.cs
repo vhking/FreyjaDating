@@ -69,10 +69,10 @@ namespace FreyjaDating.API.Data
         #region Helpers
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
-            // Pass
+            
             using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
             {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password);
+                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
                 // Compare the computehash with what is stored in the database
                 for (int i = 0; i < computedHash.Length; i++)
                 {
