@@ -11,7 +11,7 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <!-- Navbar buttons -->
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav" *ngIf="loggedIn()">
         <li><a href="#">Matches</a></li>
         <li><a href="#">Lists</a></li>
         <li><a href="#">Messages</a></li>
@@ -27,12 +27,10 @@
         <button type="submit" [disabled]="!loginFrom.valid" class="btn btn-success">Sign in</button>
       </form>
       <!-- navbar dropdown -->
-      <ul *ngIf="loggedIn()" class="nav navbar-nav navbar-right">
-          <li><a (click)="logout()">Logout</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" 
-              aria-haspopup="true" aria-expanded="false">Welcome {{authService.decodedToken?.unique_name | titlecase}} <span class="caret"></span></a>
-            <ul class="dropdown-menu">
+      <ul *ngIf="loggedIn()" class="nav navbar-nav navbar-right">       
+          <li class="dropdown" dropdown>
+            <a href="#" class="dropdown-toggle" dropDownToggle>Welcome {{authService.decodedToken?.unique_name | titlecase}} <span class="caret"></span></a>
+            <ul class="dropdown-menu" *dropDownMenu>
               <li><a href="#"><I class="fa fa-user"></I>Edit Profile</a></li>
               <li><a href="#">Another action</a></li>
               <li><a href="#">Something else here</a></li>
