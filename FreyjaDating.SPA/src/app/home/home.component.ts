@@ -7,9 +7,10 @@ import { Http } from '@angular/http';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-registerMode = false;
-values: any;
-  constructor(private http: Http) { }
+  registerMode = false;
+  values: any;
+
+  constructor(private http: Http) {}
 
   ngOnInit() {
   }
@@ -21,5 +22,4 @@ values: any;
   cancelRegisterMode(registerMode: boolean) {
     this.registerMode = registerMode;
   }
-
 }

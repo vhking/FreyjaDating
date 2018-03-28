@@ -50,7 +50,7 @@ namespace FreyjaDating.API.Controllers
             // register user
             var createdUser = await _repo.Register(userToCreate, userForRegisterDTO.Password);
 
-            return StatusCode(281);
+            return StatusCode(201);
         }
 
         [HttpPost("login")]
