@@ -26,9 +26,12 @@ namespace FreyjaDating.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]UserForRegisterDTO userForRegisterDTO)
         {
+            if (!string.IsNullOrEmpty(userForRegisterDTO.Username))
+            {
+                // Stores the user name as lowercase. 
+                userForRegisterDTO.Username = userForRegisterDTO.Username.ToLower();
+            }
 
-            // Stores the user name as lowercase. 
-            userForRegisterDTO.Username = userForRegisterDTO.Username.ToLower();
             // checks if  user exits
             if (await _repo.UserExists(userForRegisterDTO.Username))
             {
