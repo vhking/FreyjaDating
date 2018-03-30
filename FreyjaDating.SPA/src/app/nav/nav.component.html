@@ -7,14 +7,20 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Project name</a>
+      <a class="navbar-brand"[routerLink]="['/home']" routerLinkActive="router-link-active" >Project name</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <!-- Navbar buttons -->
       <ul class="nav navbar-nav" *ngIf="loggedIn()">
-        <li><a href="#">Matches</a></li>
-        <li><a href="#">Lists</a></li>
-        <li><a href="#">Messages</a></li>
+        <li routerLinkActive="active">
+          <a [routerLink]="['/members']"  >Matches</a>
+        </li>
+        <li routerLinkActive="active">
+          <a [routerLink]="['/lists']" >Lists</a>
+        </li>
+        <li routerLinkActive="active">
+          <a [routerLink]="['/messages']">Messages</a>
+        </li>
       </ul>
       <!-- Navbar loginform -->
       <form *ngIf="!loggedIn()" #loginFrom="ngForm" class="navbar-form navbar-right" (ngSubmit)="login()">
@@ -27,15 +33,14 @@
         <button type="submit" [disabled]="!loginFrom.valid" class="btn btn-success">Sign in</button>
       </form>
       <!-- navbar dropdown -->
-      <ul *ngIf="loggedIn()" class="nav navbar-nav navbar-right">       
+   
+      <ul *ngIf="loggedIn()" class="nav navbar-nav navbar-right">
           <li class="dropdown" dropdown>
-            <a href="#" class="dropdown-toggle" dropDownToggle>Welcome {{authService.decodedToken?.unique_name | titlecase}} <span class="caret"></span></a>
-            <ul class="dropdown-menu" *dropDownMenu>
-              <li><a href="#"><I class="fa fa-user"></I>Edit Profile</a></li>
-              <li><a href="#">Another action</a></li>
-              <li><a href="#">Something else here</a></li>
+            <a (click)="false" class="dropdown-toggle" dropdownToggle>Welcome {{authService.decodedToken?.unique_name | titlecase}} <span class="caret"></span></a>
+            <ul class="dropdown-menu" *dropdownMenu>
+              <li><a [routerLink]="['/member/edit']"><i class="fa fa-user"></i> Edit Profile</a></li>
               <li role="separator" class="divider"></li>
-              <li><a (click)="logout()"><i class="fa fa-sign-out"></i>Logout</a></li>
+              <li><a (click)="logout()"><i class="fa fa-sign-out"></i> Logout</a></li>
             </ul>
           </li>
         </ul>

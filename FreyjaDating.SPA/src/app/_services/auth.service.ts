@@ -15,15 +15,14 @@ export class AuthService {
   constructor(private http: Http) {}
 
   login(model: any) {
-    return this.http
-    .post(this.baseUrl + 'login', model, this.requestOptions())
-    .map((response: Response) => {
-        const user = response.json();
-        if (user && user.tokenString) {
-            localStorage.setItem('token', user.tokenString);
-            this.decodedToken = this.jwtHelper.decodeToken(user.tokenString);
-            console.log(this.decodedToken);
-        }
+    return this.http.post(this.baseUrl + 'login', model, this.requestOptions()).map((response: Response) => {
+      const user = response.json();
+      if (user) {
+        localStorage.setItem('token', user.tokenString);
+        this.decodedToken = this.jwtHelper.decodeToken(user.tokenString);
+        console.log(this.decodedToken);
+        this.userToken = user.tokenString;
+      }
     }).catch(this.handleError);
   }
 
@@ -36,8 +35,8 @@ export class AuthService {
   }
 
   private requestOptions() {
-    const headers = new Headers({ 'Content-type': 'application/json' });
-    return new RequestOptions({ headers: headers });
+    const headers = new Headers({'Content-type': 'application/json'});
+    return new RequestOptions({headers: headers});
   }
 
   private handleError(error: any) {
@@ -55,7 +54,8 @@ export class AuthService {
       }
     }
     return Observable.throw(
-      modelStateErrors || 'Sever error'
+      modelStateErrors || 'Server error'
     );
   }
+
 }

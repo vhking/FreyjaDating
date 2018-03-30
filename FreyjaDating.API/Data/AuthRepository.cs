@@ -41,7 +41,7 @@ namespace FreyjaDating.API.Data
             // Hashes and salts the password
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
             // Assign password hash and salt to the user objects propertie fields
-            user.PasswordHash = passwordHash;            
+            user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
             // Adds and saves the newely registed user to the database
@@ -51,7 +51,7 @@ namespace FreyjaDating.API.Data
             // Returns the user object
             return user;
         }
-
+        #region Helpers
         // Checks if the user exists
         public async Task<bool> UserExists(string username)
         {
@@ -66,21 +66,20 @@ namespace FreyjaDating.API.Data
         }
 
 
-        #region Helpers
+
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
-            
             using (var hmac = new System.Security.Cryptography.HMACSHA512(passwordSalt))
             {
                 var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
                 // Compare the computehash with what is stored in the database
                 for (int i = 0; i < computedHash.Length; i++)
                 {
-                    if (computedHash[i] != password[i]) return false;
+                    if (computedHash[i] != passwordHash[i]) return false;
                 }
-
             }
             return true;
+
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)

@@ -19,13 +19,13 @@ success(message: string) {
     alertify.success(message);
 }
 error(message: string) {
-    alertify.success(message);
+    alertify.error(message);
 }
 warning(message: string) {
-    alertify.success(message);
+    alertify.warning(message);
 }
 message(message: string) {
-    alertify.success(message);
+    alertify.message(message);
 }
 
 

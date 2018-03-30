@@ -12,16 +12,17 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace FreyjaDating.API.Controllers
 {
-    [Route("api/[Controller]")]
+  [Route("api/[controller]")]
     public class AuthController : Controller
     {
         private readonly IAuthRepository _repo;
-        private readonly IConfiguration _configuration;
-        public AuthController(IAuthRepository repo, IConfiguration configuration)
+        private readonly IConfiguration _config;
+        public AuthController(IAuthRepository repo, IConfiguration config)
         {
-            _configuration = configuration;
+            _config = config;
             _repo = repo;
         }
+
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]UserForRegisterDTO userForRegisterDTO)
@@ -67,7 +68,7 @@ namespace FreyjaDating.API.Controllers
 
             // generate token
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration.GetSection("AppSettings:Token").Value);
+            var key = Encoding.ASCII.GetBytes(_config.GetSection("AppSettings:Token").Value);
             var tokenDescription = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
