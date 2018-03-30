@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FreyjaDating.API.Controllers
 {
     [Authorize]
-    [Route("api/[controller")]
+    [Route("api/[controller]")]
     public class UsersController : Controller
     {
         private readonly IDatingRepository _repo;

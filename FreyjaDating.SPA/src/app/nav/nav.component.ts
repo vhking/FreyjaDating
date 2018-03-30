@@ -11,14 +11,14 @@ import { Router } from '@angular/router';
 export class NavComponent implements OnInit {
   model: any = {};
 
-  constructor(public authService: AuthService, private alertify: AlertifyService, private router: Router) { }
+  constructor(private authService: AuthService, private alertify: AlertifyService, private router: Router) { }
 
   ngOnInit() {
   }
 
   login() {
     this.authService.login(this.model).subscribe(data => {
-     this.alertify.success('Logged in successfully');
+      this.alertify.success('logged in successfully');
     }, error => {
       this.alertify.error('Failed to log in');
     }, () => {
@@ -29,7 +29,7 @@ export class NavComponent implements OnInit {
   logout() {
     this.authService.userToken = null;
     localStorage.removeItem('token');
-    this.alertify.message('Logged out');
+    this.alertify.message('logged out');
     this.router.navigate(['/home']);
   }
 
