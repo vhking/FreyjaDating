@@ -39,6 +39,7 @@ namespace FreyjaDating.API
             services.AddCors();
             // makes Repositry available for the rest of the application
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IDatingRepository, DatingRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
