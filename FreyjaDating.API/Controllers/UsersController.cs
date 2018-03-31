@@ -18,22 +18,27 @@ namespace FreyjaDating.API.Controllers
         {
             _mapper = mapper;
             _repo = repo;
-
         }
 
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
             var users = await _repo.GetUsers();
-            var usersToReturn = _mapper.Map<IEnumerable<UserForDetailedDTO>>(users);
-            return Ok(users);
+
+            var usersToReturn = _mapper.Map<IEnumerable<UserForListDTO>>(users);
+
+            return Ok(usersToReturn);
         }
-        [HttpGet]
+
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _repo.GetUser(id);
+
             var userToReturn = _mapper.Map<UserForDetailedDTO>(user);
-            return Ok(user);
+
+            return Ok(userToReturn);
         }
+
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreyjaDating.API.Data
 {
-    public class DatingRepository : IDatingRepository
+     public class DatingRepository : IDatingRepository
     {
         private readonly DataContext _context;
         public DatingRepository(DataContext context)
