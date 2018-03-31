@@ -5,14 +5,23 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import { Observable } from 'rxjs/Observable';
 import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { User } from '../_models/user';
 @Injectable()
 export class AuthService {
   baseUrl = 'http://localhost:5000/api/auth/';
   userToken: any;
   decodedToken: any;
+  currentUser: User;
   jwtHelper: JwtHelper = new JwtHelper();
+  private photoUrl = new BehaviorSubject<string>('../../assets/user.png');
+  currentPhotoUrl = this.photoUrl.asObservable();
 
   constructor(private http: Http) {}
+
+  changeMemberPhoto(photoUrl: string) {
+    this.photoUrl.next(photoUrl);
+  }
 
   login(model: any) {
     return this.http.post(this.baseUrl + 'login', model, this.requestOptions()).map((response: Response) => {

@@ -1,8 +1,8 @@
 using System;
 
-namespace FreyjaDating.API.Models
+namespace FreyjaDating.API.DTOs
 {
-    public class Photo
+    public class PhotoForReturnDTO
     {
         public int Id { get; set; }
         public string Url { get; set; }
@@ -10,8 +10,5 @@ namespace FreyjaDating.API.Models
         public DateTime DateAdded { get; set; }
         public bool IsMain { get; set; }
         public string PublicId { get; set; }
-
-        public User User { get; set; }
-        public int UserId { get; set; }
     }
 }

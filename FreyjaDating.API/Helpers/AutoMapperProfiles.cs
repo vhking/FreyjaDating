@@ -7,10 +7,10 @@ namespace FreyjaDating.API.Helpers
 {
     public class AutoMapperProfiles : Profile
     {
-       public AutoMapperProfiles()
+        public AutoMapperProfiles()
         {
             CreateMap<User, UserForDetailedDTO>()
-                .ForMember(dest => dest.PhotoUrl, opt => 
+                .ForMember(dest => dest.PhotoUrl, opt =>
                 {
                     opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain).Url);
                 })
@@ -19,7 +19,7 @@ namespace FreyjaDating.API.Helpers
                     opt.ResolveUsing(d => d.DateOfBirth.CalculateAge());
                 });
             CreateMap<User, UserForListDTO>()
-                .ForMember(dest => dest.PhotoUrl, opt => 
+                .ForMember(dest => dest.PhotoUrl, opt =>
                 {
                     opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain).Url);
                 })
@@ -28,8 +28,9 @@ namespace FreyjaDating.API.Helpers
                     opt.ResolveUsing(d => d.DateOfBirth.CalculateAge());
                 });
             CreateMap<Photo, PhotosForDetailedDTO>();
-
             CreateMap<UserForUpdateDTO, User>();
+            CreateMap<PhotoForCreationDTO, Photo>();
+            CreateMap<Photo, PhotoForReturnDTO>();
         }
     }
 }
