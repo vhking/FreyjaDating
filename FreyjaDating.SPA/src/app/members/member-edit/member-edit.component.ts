@@ -19,7 +19,7 @@ export class MemberEditComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private authService: AuthService,
     private alertify: AlertifyService,
-    private userService: UserService) { }
+    public userService: UserService) { }
 
   ngOnInit() {
     this.route.data.subscribe(data => {

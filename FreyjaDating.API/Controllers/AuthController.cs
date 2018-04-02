@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using FreyjaDating.API.Data;
 using FreyjaDating.API.DTOs;
 using FreyjaDating.API.Models;
@@ -12,14 +13,21 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace FreyjaDating.API.Controllers
 {
-  [Route("api/[controller]")]
+    [Route("api/[controller]")]
     public class AuthController : Controller
     {
         private readonly IAuthRepository _repo;
         private readonly IConfiguration _config;
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        private readonly IMapper _mapper;
+
+        
+        public AuthController(
+            IAuthRepository repo,
+            IConfiguration config,
+            IMapper mapper)
         {
             _config = config;
+            _mapper = mapper;
             _repo = repo;
         }
 
@@ -83,8 +91,9 @@ namespace FreyjaDating.API.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescription);
             var tokenString = tokenHandler.WriteToken(token);
+            var user = _mapper.Map<UserForListDTO>(userFromRepo);
 
-            return Ok(new { tokenString });
+            return Ok(new { tokenString, user });
         }
 
 

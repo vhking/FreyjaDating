@@ -17,7 +17,7 @@ namespace FreyjaDating.API.Data
         {
             // return the first user in the database that matches the username.
             // else it returs NULL
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+            var user = await _context.Users.Include(p=> p.Photos).FirstOrDefaultAsync(u => u.Username == username);
             // returns NUll if no user are found.
             if (user == null)
             {
