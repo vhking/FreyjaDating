@@ -33,9 +33,13 @@ namespace FreyjaDating.API.Controllers
             _cloudinaryConfig = cloudinaryConfig;
 
             Account acc = new Account(
-                _cloudinaryConfig.Value.CloudName,
-                _cloudinaryConfig.Value.ApiKey,
-                _cloudinaryConfig.Value.ApiSecret
+                "dx7ouxweb",
+                "273328485492785",
+                "Sk-lpo6ZktYSViyI0uKXsae2Too"
+                
+                // _cloudinaryConfig.Value.Cloud,
+                // _cloudinaryConfig.Value.ApiKey,
+                // _cloudinaryConfig.Value.ApiSecret
             );
 
             _cloudinary = new Cloudinary(acc);
