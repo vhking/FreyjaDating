@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FreyjaDating.API.Data;
 using FreyjaDating.API.DTOs;
+using FreyjaDating.API.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FreyjaDating.API.Controllers
 {
+    [ServiceFilter(typeof(LogUserActivity))]
     [Authorize]
     [Route("api/[controller]")]
     public class UsersController : Controller
