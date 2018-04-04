@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FreyjaDating.API.DTOs
@@ -6,8 +7,32 @@ namespace FreyjaDating.API.DTOs
     {
         [Required]
         public string Username { get; set; }
+
         [Required]
-        [StringLength(32,MinimumLength = 4, ErrorMessage = "You must specify a password between 4 and 32 characters")]
+        [StringLength(8, MinimumLength = 4, ErrorMessage = "You must specify a password between 4 and 8 characters")]
         public string Password { get; set; }
+
+        [Required]
+        public string Gender { get; set; }
+
+        [Required]
+        public string KnownAs { get; set; }
+
+        [Required]
+        public DateTime DateOfBirth { get; set; }
+
+        [Required]
+        public string City { get; set; }
+
+        [Required]
+        public string Country { get; set; }
+        public DateTime Created { get; set; }
+        public DateTime LastActive { get; set; }
+
+        public UserForRegisterDTO()
+        {
+            Created = DateTime.Now;
+            LastActive = DateTime.Now;
+        }
     }
 }
