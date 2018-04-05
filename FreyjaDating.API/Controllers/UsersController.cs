@@ -25,11 +25,24 @@ namespace FreyjaDating.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers([FromQuery]UserParams userParams)
         {
-            var users = await _repo.GetUsers();
+            var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var userFromRepo = await _repo.GetUser(currentUserId);
+
+            userParams.UserId = currentUserId;
+
+            if (string.IsNullOrEmpty(userParams.Gender))
+            {
+                userParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
+            }
+
+            var users = await _repo.GetUsers(userParams);
 
             var usersToReturn = _mapper.Map<IEnumerable<UserForListDTO>>(users);
+
+            Response.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
             return Ok(usersToReturn);
         }
@@ -45,7 +58,7 @@ namespace FreyjaDating.API.Controllers
         }
 
         //api/users/1 PUT:
-         [HttpPut("{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UserForUpdateDTO userForUpdateDTO)
         {
             if (!ModelState.IsValid)
@@ -60,7 +73,7 @@ namespace FreyjaDating.API.Controllers
 
             if (currentUserId != userFromRepo.Id)
                 return Unauthorized();
-            
+
             _mapper.Map(userForUpdateDTO, userFromRepo);
 
             if (await _repo.SaveAll())
