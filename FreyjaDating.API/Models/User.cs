@@ -21,10 +21,11 @@ namespace FreyjaDating.API.Models
         public string Interests { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-
         public ICollection<Photo> Photos { get; set; }
         public ICollection<Like> Liker { get; set; }
-        public ICollection<Like> Likee { get; set; }    
+        public ICollection<Like> Likee { get; set; }
+        public ICollection<Message> MessageSent { get; set; }
+        public ICollection<Message> MessagesReceived { get; set; }
 
         public User()
         {
